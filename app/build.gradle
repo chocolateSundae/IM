@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 
 android {
 
+    useLibrary 'org.apache.http.legacy'
+
     //为了解决部分第三方库重复打包了META-INF的问题
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'

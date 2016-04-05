@@ -3,13 +3,8 @@ package com.example.xiu.im0;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVObject;
-import com.avos.avoscloud.SaveCallback;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,17 +22,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // 测试 SDK 是否正常工作的代码
-        AVObject testObject = new AVObject("TestObject");
-        testObject.put("words", "sucesss 11-27!");
-        testObject.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(AVException e) {
-                if (e == null) {
-                    Log.d("saved", "success!");
-                }
-            }
-        });
+//        // 测试 SDK 是否正常工作的代码
+//        AVObject testObject = new AVObject("TestObject");
+//        testObject.put("words", "sucesss 11-27!");
+//        testObject.saveInBackground(new SaveCallback() {
+//            @Override
+//            public void done(AVException e) {
+//                if (e == null) {
+//                    Log.d("saved", "success!");
+//                }
+//            }
+//        });
 
     }
 }
