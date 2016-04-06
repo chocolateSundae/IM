@@ -13,8 +13,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -74,33 +72,19 @@ public class SignThread extends Thread {
 
         // 打印执行结果
         try {
-            String jsonResponseS = EntityUtils.toString(response.getEntity());
-            try {
-                JSONObject jsonResponse = new JSONObject(jsonResponseS);
-                System.out.println("response code:" + jsonResponse.getString("code"));
-                if(jsonResponse.getString("code").equals("200")){
-                 JSONObject info = jsonResponse.getJSONObject("info");
-                 token = info.getString("token");
-                }else {
-                    System.out.println("tokenResponse not 200");
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
+            System.out.println(EntityUtils.toString(response.getEntity(), "utf-8"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return token;
     }
 
 
-    public void signLeancloud(String userName , String userPwd,String token){
+
+    public void signLeancloud(String userName , String userPwd){
         AVObject userInfo = new AVObject("UserInfo");
         userInfo.put("userName", userName);
         userInfo.put("userPwd", userPwd);
-        userInfo.put("token",token);
         userInfo.saveInBackground(new SaveCallback() {
             @Override
             public void done(AVException e) {
@@ -113,7 +97,7 @@ public class SignThread extends Thread {
 
     @Override
     public void run() {
-        String token = signNIMID(userName);
-        signLeancloud(userName,userPwd,token);
+        signNIMID(userName);
+        signLeancloud(userName,userPwd);
     }
 }
