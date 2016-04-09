@@ -1,8 +1,10 @@
 package com.example.xiu.im0;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Environment;
+import android.text.TextUtils;
 
 import com.avos.avoscloud.AVOSCloud;
 import com.netease.nimlib.sdk.NIMClient;
@@ -23,12 +25,12 @@ public class MyApplication extends Application {
         // leanCloud初始化参数依次为 this, AppId, AppKey
         AVOSCloud.initialize(this, "V3o5V2M27mCoAwRx0P5xLulA-gzGzoHsz", "lkDiLfRgYh1B15YdYJEz0p2P");
 
+
         // SDK初始化（启动后台服务，若已经存在用户登录信息， SDK 将完成自动登录）
         NIMClient.init(this, loginInfo(), options());
 
-
-
     }
+
 
     // 如果返回值为 null，则全部使用默认参数。
     private SDKOptions options() {
@@ -87,6 +89,16 @@ public class MyApplication extends Application {
 
     // 如果已经存在用户登录信息，返回LoginInfo，否则返回null即可
     private LoginInfo loginInfo() {
+
+        SharedPreferences preferences = getSharedPreferences("user",MODE_PRIVATE);
+        String account = preferences.getString("userName", null);
+        String token = preferences.getString("token",null);
+        if(!TextUtils.isEmpty(account)&& !TextUtils.isEmpty((token))){
+            System.out.println("自动登陆成功");
+            return  new LoginInfo(account,token);
+        }else {
+            System.out.println("自动登陆失败");
+        }
         return null;
     }
 }
